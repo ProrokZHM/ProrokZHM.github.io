@@ -2,7 +2,7 @@ from hashlib import sha256
 from html.parser import HTMLParser
 from urllib.request import Request, urlopen
 
-BASE = 'https://prorokzhm.github.io'
+BASE = 'https://economevoice.ru'
 PATHS = ('/', '/app/', '/about/', '/contacts/', '/privacy/', '/assets/style.css', '/assets/logo.jpg', '/robots.txt', '/sitemap.xml')
 HASHES = {'/app-ads.txt': '93a6e859acb5c5c7124f6bacb1194ae81a5b4a3fdb65e50abf6fe79125dffecd', '/ads.txt': '913c5dfdfe179295cd76c3c54dd20ccba1e2077438a9c60d09cc3a91a94861d6'}
 
@@ -39,4 +39,3 @@ print('PASS current RuStore policy URL in published privacy page')
 print('External HTTPS links:')
 for link in sorted(links):
     print(link)
-

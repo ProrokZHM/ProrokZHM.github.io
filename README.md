@@ -16,11 +16,11 @@ python -m http.server 8000 --directory dist
 
 Исходники размещены в отдельном **публичном** репозитории `ProrokZHM/ProrokZHM.github.io`. GitHub Pages публикует ветку `main` из корня; `build.py` зеркалирует содержимое `dist/` в корень. Workflow `.github/workflows/pages.yml` проверяет сборку, ссылки, политику и хэши РСЯ. Не переносите в репозиторий Android-код или ключ подписи.
 
-После публикации проверьте `https://prorokzhm.github.io/app-ads.txt` и `/ads.txt`: HTTPS 200, `text/plain`, SHA-256 как выше. Адрес сайта разработчика в RuStore меняется отдельно, после подтверждения сайта владельцем.
+После публикации проверьте `https://economevoice.ru/app-ads.txt` и `/ads.txt`: HTTPS 200, `text/plain`, SHA-256 как выше. Адрес сайта разработчика в RuStore меняется отдельно, после подтверждения сайта владельцем.
 
-## economvoice.ru
+## economevoice.ru
 
-Домен пока не подключён. При наличии подтверждённого владения и доступа к DNS: добавьте домен в Settings → Pages → Custom domain, внесите DNS-записи по текущей [документации GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), дождитесь HTTPS и включите Enforce HTTPS. После проверки замените `ORIGIN` в `build.py`, пересоберите сайт и снова проверьте ссылки, sitemap, canonical и файлы РСЯ. Регистрация или продление `.ru` домена может требовать оплаты; этот проект не совершает платежей.
+Владелец зарегистрировал `economevoice.ru` в Рег.ру до 27.11.2027 и поручил подключить именно его. `economvoice.ru` — другое, не купленное имя. В GitHub Pages укажите `economevoice.ru` как Custom domain. В DNS Рег.ру задайте четыре A-записи для `@` на `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` и CNAME для `www` на `prorokzhm.github.io`; сверяйте адреса с [текущей документацией GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site). После выпуска сертификата включите Enforce HTTPS и проверьте страницы и оба файла РСЯ.
 
 ## Источники
 

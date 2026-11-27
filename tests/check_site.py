@@ -39,7 +39,7 @@ for name in pages:
         target=DIST/clean.lstrip('/')
         if clean.endswith('/'): target=target/'index.html'
         assert target.exists(),(name,link)
-    assert 'economvoice.ru' not in text,name
+    assert '<link rel="canonical" href="https://economevoice.ru/' in text,name
 
 source=(ROOT/'source/privacy-v3.html').read_text(encoding='utf-8')
 policy=(DIST/'privacy/index.html').read_text(encoding='utf-8')
@@ -47,6 +47,7 @@ body=re.search(r'(<section>.*?</footer>)',source).group(1).split('<footer>')[0]
 body=body.replace('https://www.rustore.ru/help/legal/privacy-policy', 'https://www.rustore.ru/help/legal/privacy-policy-users')
 assert body in policy,'Current Sites v3 policy body changed beyond repaired RuStore link'
 assert (DIST/'robots.txt').exists() and (DIST/'sitemap.xml').exists()
+assert (DIST/'CNAME').read_text(encoding='utf-8') == 'economevoice.ru\n'
 assert (DIST/'assets/logo.jpg').is_file()
 for file in DIST.rglob('*'):
     if file.is_file():
