@@ -45,4 +45,6 @@ policy=(DIST/'privacy/index.html').read_text(encoding='utf-8')
 body=re.search(r'(<section>.*?</footer>)',source).group(1).split('<footer>')[0]
 assert body in policy,'Current Sites v3 policy body changed'
 assert (DIST/'robots.txt').exists() and (DIST/'sitemap.xml').exists()
+assert (DIST/'assets/logo.jpg').is_file()
 print(f'PASS: {len(pages)} pages, local links, policy v3, advertising file hashes')
+
