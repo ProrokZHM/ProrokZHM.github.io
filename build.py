@@ -1,7 +1,6 @@
 from pathlib import Path
 import html
 import re
-import shutil
 
 ROOT = Path(__file__).parent
 OUT = ROOT / 'dist'
@@ -41,4 +40,4 @@ for path,title,description,body in [
 write('404.html',page('Страница не найдена','Запрошенная страница не найдена.','<section class="page-heading"><h1>Страница не найдена</h1><p>Возможно, адрес изменился. Вернитесь на <a href="/">главную страницу</a>.</p></section>','/404.html',''))
 write('robots.txt',f'User-agent: *\nAllow: /\nSitemap: {ORIGIN}/sitemap.xml\n')
 write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{ORIGIN}{path}</loc></url>\n' for path in ['/','/app/','/about/','/contacts/','/privacy/'])+'</urlset>\n')
-shutil.copyfile(ROOT.parent / '4.0.2-production' / 'app' / 'src' / 'main' / 'res' / 'drawable' / 'logo.jpg',OUT / 'assets' / 'logo.jpg')
+
