@@ -1,0 +1,44 @@
+from pathlib import Path
+import html
+import re
+import shutil
+
+ROOT = Path(__file__).parent
+OUT = ROOT / 'dist'
+ORIGIN = 'https://golos-ekonomiki-official.soundstone6.chatgpt.site'
+
+nav = [('Главная','/'),('Приложение','/app/'),('О проекте','/about/'),('Контакты','/contacts/'),('Конфиденциальность','/privacy/')]
+
+def page(title, description, body, path, active):
+    links = ''.join(f'<a href="{u}"'+(' aria-current="page"' if active == u else '')+f'>{n}</a>' for n,u in nav)
+    return f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101419"><title>{html.escape(title)} — Голос Экономики</title><meta name="description" content="{html.escape(description,quote=True)}"><link rel="canonical" href="{ORIGIN}{path}"><meta property="og:type" content="website"><meta property="og:locale" content="ru_RU"><meta property="og:title" content="{html.escape(title,quote=True)} — Голос Экономики"><meta property="og:description" content="{html.escape(description,quote=True)}"><meta property="og:url" content="{ORIGIN}{path}"><meta property="og:image" content="{ORIGIN}/assets/logo.jpg"><link rel="icon" href="/assets/logo.jpg" type="image/jpeg"><link rel="stylesheet" href="/assets/style.css"></head><body><a class="skip" href="#content">К содержимому</a><header class="site-header"><a class="brand" href="/"><img src="/assets/logo.jpg" alt="" width="42" height="42"><span>Голос<br>Экономики</span></a><nav aria-label="Основная навигация">{links}</nav></header><main id="content">{body}</main><footer class="site-footer"><p>Голос Экономики · Материалы и расчёты для понимания финансов</p><div><a href="/privacy/">Конфиденциальность</a><a href="/contacts/">Контакты</a></div></footer></body></html>'''
+
+def write(path, content):
+    dest = OUT / path
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(content, encoding='utf-8', newline='\n')
+
+home = '''<section class="hero"><div><p class="eyebrow">Медиапроект о деньгах и экономике</p><h1>Разбираться в финансах — спокойнее, чем кажется</h1><p class="lead">Объясняем экономические темы понятным языком. Помогаем сравнивать сценарии и видеть, как условия влияют на результат расчёта.</p><div class="actions"><a class="button" href="/app/">Изучить приложение</a><a class="text-link" href="/about/">О проекте</a></div></div><div class="hero-mark"><img src="/assets/logo.jpg" width="540" height="540" alt="Логотип Голоса Экономики: микрофон на фоне графика"></div></section><section class="section intro"><p class="eyebrow">Темы проекта</p><h2>От цифр к пониманию</h2><div class="grid"><article><span class="card-line"></span><h3>Личные финансы</h3><p>Платежи, накопления и финансовые решения в повседневной жизни.</p></article><article><span class="card-line"></span><h3>Экономика</h3><p>События и понятия, которые помогают читать новости осмысленно.</p></article><article><span class="card-line"></span><h3>Расчёты</h3><p>Сценарии кредитов, вкладов и других инструментов в Android-приложении.</p></article></div></section><section class="section split"><div><p class="eyebrow">Android-приложение</p><h2>Проверьте сценарий до решения</h2></div><div><p>Задайте исходные условия и посмотрите результат, график и календарь платежей. Расчёты выполняются на устройстве, без регистрации.</p><a class="text-link" href="/app/">Что умеет приложение</a></div></section><section class="section channel"><p class="eyebrow">Следите за проектом</p><h2>Объяснения, новости и разборы</h2><p>Выберите удобную площадку:</p><div class="channel-links"><a href="https://www.youtube.com/@economvoice" rel="noopener noreferrer">YouTube</a><a href="https://t.me/+WPuqQFgRWfNlOTQ6" rel="noopener noreferrer">Telegram</a><a href="https://vk.ru/economvoice" rel="noopener noreferrer">ВКонтакте</a></div></section>'''
+app = '''<section class="page-heading"><p class="eyebrow">Android-приложение</p><h1>Финансовые расчёты под рукой</h1><p class="lead">«Голос Экономики» помогает изучать варианты кредитов, вкладов и других финансовых сценариев по введённым вами условиям.</p></section><section class="section grid"><article><h2>Расчёт и график</h2><p>Результаты и графики помогают увидеть изменение показателей при разных исходных условиях.</p></article><article><h2>Сохранённые сценарии</h2><p>Сохраняйте расчёты, чтобы вернуться к ним позже и сравнить условия.</p></article><article><h2>Календарь и напоминания</h2><p>Планируйте даты платежей. Напоминания не выполняют платежи за вас.</p></article></section><section class="section notice"><h2>Данные остаются на устройстве</h2><p>Приложение работает без аккаунта. Подробнее об обработке данных, рекламе и обновлениях — в <a href="/privacy/">политике конфиденциальности</a>.</p></section><section class="section"><h2>Как получить приложение</h2><p>Карточка RuStore будет добавлена после проверки её публичного адреса. Пока мы не размещаем ссылку на неподтверждённую страницу магазина.</p><p class="fine">Расчёты носят информационный характер. Фактические условия финансовых продуктов могут отличаться.</p></section>'''
+about = '''<section class="page-heading"><p class="eyebrow">О проекте</p><h1>Голос Экономики</h1><p class="lead">Медиапроект о финансовых решениях и экономических событиях. Наша задача — сделать сложные понятия понятнее.</p></section><section class="section split"><div><h2>Ясность вместо обещаний</h2></div><div><p>Материалы помогают разобраться в теме и задать более точные вопросы. Они носят образовательный и информационный характер.</p><p>Расчёты приложения основаны на введённых пользователем условиях. Они не являются индивидуальной инвестиционной рекомендацией и не гарантируют результат.</p></div></section><section class="section notice"><h2>Самостоятельное решение</h2><p>Проект не выдаёт кредиты, не принимает деньги и не совершает финансовые операции. Перед финансовым решением сверяйте условия с документами выбранной организации.</p></section>'''
+contacts = '''<section class="page-heading"><p class="eyebrow">Связаться</p><h1>Контакты</h1><p class="lead">Вопросы по приложению и конфиденциальности можно направить разработчику по электронной почте.</p></section><section class="section contact-card"><h2>Поддержка</h2><a class="contact-mail" href="mailto:Zhmakinikita@gmail.com">Zhmakinikita@gmail.com</a><p>Пожалуйста, не присылайте пароли, банковские реквизиты и другие лишние для обращения сведения.</p></section><section class="section"><h2>Площадки проекта</h2><div class="channel-links"><a href="https://www.youtube.com/@economvoice" rel="noopener noreferrer">YouTube</a><a href="https://t.me/+WPuqQFgRWfNlOTQ6" rel="noopener noreferrer">Telegram</a><a href="https://vk.ru/economvoice" rel="noopener noreferrer">ВКонтакте</a></div></section>'''
+
+privacy_source = (ROOT / 'source' / 'privacy-v3.html').read_text(encoding='utf-8')
+match = re.search(r'(<section>.*?</footer>)', privacy_source)
+if not match: raise ValueError('Cannot read approved privacy body')
+privacy_body = match.group(1).split('<footer>')[0]
+privacy = '<section class="page-heading"><p class="eyebrow">Android · редакция 26.11.2026</p><h1>Политика конфиденциальности</h1><p>Для версии приложения 4.0.2. Разработчик: Zhmakin Nikita. Контакт: <a href="mailto:Zhmakinikita@gmail.com">Zhmakinikita@gmail.com</a>.</p></section><div class="policy">'+privacy_body+'</div>'
+
+write('index.html', page('Главная','Медиапроект о личных финансах и экономике. Объяснения и Android-приложение для финансовых расчётов.',home,'/','/'))
+for path,title,description,body in [
+    ('app/index.html','Приложение','Android-приложение Голос Экономики: финансовые расчёты, графики, сохранённые сценарии и напоминания.',app),
+    ('about/index.html','О проекте','О медиапроекте Голос Экономики и образовательном характере материалов.',about),
+    ('contacts/index.html','Контакты','Контакты разработчика и подтверждённые площадки проекта Голос Экономики.',contacts),
+    ('privacy/index.html','Политика конфиденциальности','Политика конфиденциальности Android-приложения Голос Экономики, версия 4.0.2.',privacy),
+]:
+    route='/' + path.replace('index.html','')
+    write(path,page(title,description,body,route,route))
+write('404.html',page('Страница не найдена','Запрошенная страница не найдена.','<section class="page-heading"><h1>Страница не найдена</h1><p>Возможно, адрес изменился. Вернитесь на <a href="/">главную страницу</a>.</p></section>','/404.html',''))
+write('robots.txt',f'User-agent: *\nAllow: /\nSitemap: {ORIGIN}/sitemap.xml\n')
+write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{ORIGIN}{path}</loc></url>\n' for path in ['/','/app/','/about/','/contacts/','/privacy/'])+'</urlset>\n')
+shutil.copyfile(ROOT.parent / '4.0.2-production' / 'app' / 'src' / 'main' / 'res' / 'drawable' / 'logo.jpg',OUT / 'assets' / 'logo.jpg')
