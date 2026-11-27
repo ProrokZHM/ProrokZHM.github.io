@@ -14,7 +14,7 @@ python -m http.server 8000 --directory dist
 
 ## GitHub Pages
 
-Для адреса `https://prorokzhm.github.io/` создайте отдельный **публичный** репозиторий `ProrokZHM/ProrokZHM.github.io`, загрузите эти файлы в `main`, затем в Settings → Pages выберите Source: GitHub Actions. Workflow `.github/workflows/pages.yml` собирает, проверяет и публикует `dist/`. Не переносите в репозиторий Android-код или ключ подписи.
+Исходники размещены в отдельном **публичном** репозитории `ProrokZHM/ProrokZHM.github.io`. Для публикации `dist/` в Settings → Pages выберите Source: GitHub Actions. Workflow `.github/workflows/pages.yml` собирает, проверяет и публикует `dist/`. Не переносите в репозиторий Android-код или ключ подписи.
 
 После публикации проверьте `https://prorokzhm.github.io/app-ads.txt` и `/ads.txt`: HTTPS 200, `text/plain`, SHA-256 как выше. Адрес сайта разработчика в RuStore меняется отдельно, после подтверждения сайта владельцем.
 
@@ -25,3 +25,4 @@ python -m http.server 8000 --directory dist
 ## Источники
 
 Политика в `source/privacy-v3.html` перенесена из опубликованной версии Sites v3 от 26.11.2026. Логотип взят из исходников приложения; внешние площадки сверены с `MainActivity.java`. Карточка RuStore не добавлена до проверки её публичного URL.
+
