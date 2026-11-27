@@ -1,10 +1,11 @@
 from pathlib import Path
 import html
 import re
+import shutil
 
 ROOT = Path(__file__).parent
 OUT = ROOT / 'dist'
-ORIGIN = 'https://golos-ekonomiki-official.soundstone6.chatgpt.site'
+ORIGIN = 'https://prorokzhm.github.io'
 
 nav = [('Главная','/'),('Приложение','/app/'),('О проекте','/about/'),('Контакты','/contacts/'),('Конфиденциальность','/privacy/')]
 
@@ -40,4 +41,8 @@ for path,title,description,body in [
 write('404.html',page('Страница не найдена','Запрошенная страница не найдена.','<section class="page-heading"><h1>Страница не найдена</h1><p>Возможно, адрес изменился. Вернитесь на <a href="/">главную страницу</a>.</p></section>','/404.html',''))
 write('robots.txt',f'User-agent: *\nAllow: /\nSitemap: {ORIGIN}/sitemap.xml\n')
 write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{ORIGIN}{path}</loc></url>\n' for path in ['/','/app/','/about/','/contacts/','/privacy/'])+'</urlset>\n')
-
+for item in OUT.rglob('*'):
+    if item.is_file():
+        destination = ROOT / item.relative_to(OUT)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(item, destination)

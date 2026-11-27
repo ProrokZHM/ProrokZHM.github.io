@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://golos-ekonomiki-official.soundstone6.chatgpt.site/sitemap.xml
+Sitemap: https://prorokzhm.github.io/sitemap.xml
