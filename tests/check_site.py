@@ -35,8 +35,9 @@ for name in pages:
     for link in parser.links:
         if link.startswith(('mailto:','https://','#')): continue
         assert link.startswith('/'),(name,link)
-        target=DIST/link.lstrip('/')
-        if link.endswith('/'): target=target/'index.html'
+        clean=urlparse(link).path
+        target=DIST/clean.lstrip('/')
+        if clean.endswith('/'): target=target/'index.html'
         assert target.exists(),(name,link)
     assert 'economvoice.ru' not in text,name
 
