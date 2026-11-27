@@ -27,6 +27,7 @@ privacy_source = (ROOT / 'source' / 'privacy-v3.html').read_text(encoding='utf-8
 match = re.search(r'(<section>.*?</footer>)', privacy_source)
 if not match: raise ValueError('Cannot read approved privacy body')
 privacy_body = match.group(1).split('<footer>')[0]
+privacy_body = privacy_body.replace('https://www.rustore.ru/help/legal/privacy-policy', 'https://www.rustore.ru/help/legal/privacy-policy-users')
 privacy = '<section class="page-heading"><p class="eyebrow">Android · редакция 26.11.2026</p><h1>Политика конфиденциальности</h1><p>Для версии приложения 4.0.2. Разработчик: Zhmakin Nikita. Контакт: <a href="mailto:Zhmakinikita@gmail.com">Zhmakinikita@gmail.com</a>.</p></section><div class="policy">'+privacy_body+'</div>'
 
 write('index.html', page('Главная','Медиапроект о личных финансах и экономике. Объяснения и Android-приложение для финансовых расчётов.',home,'/','/'))
